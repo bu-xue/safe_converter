@@ -25,10 +25,12 @@ extension SafeConvertOnObject2Num on Object {
 /// Extension on Map? to provide safe conversion of values to num.
 extension SafeConvertOnMap2Num on Map? {
   /// Gets value by key and converts to num?.
+  /// Supports deep path access using dot notation (e.g., "data.item.count").
   num? getNumOrNull(dynamic key, {num? defaultValue}) =>
-      numNullableConvert(this?[key]) ?? defaultValue;
+      numNullableConvert(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to num, returns [defaultValue] on failure.
+  /// Supports deep path access using dot notation (e.g., "data.item.count").
   num getNum(dynamic key, {num defaultValue = 0}) =>
       getNumOrNull(key) ?? defaultValue;
 }

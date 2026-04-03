@@ -9,10 +9,12 @@ bool? boolNullableConvert(dynamic source) {
   if (source is double) return !source.isNaN && source != 0.0;
   if (source is String) {
     final lower = source.toLowerCase().trim();
-    if (lower == '1' || lower == 'true' || lower == 'yes' || lower == 'on')
+    if (lower == '1' || lower == 'true' || lower == 'yes' || lower == 'on') {
       return true;
-    if (lower == '0' || lower == 'false' || lower == 'no' || lower == 'off')
+    }
+    if (lower == '0' || lower == 'false' || lower == 'no' || lower == 'off') {
       return false;
+    }
   }
   return null;
 }
@@ -34,10 +36,12 @@ extension SafeConvertOnObject2Bool on Object {
 /// Extension on Map? to provide safe conversion of values to bool.
 extension SafeConvertOnMap2Bool on Map? {
   /// Gets value by key and converts to bool?.
+  /// Supports deep path access using dot notation (e.g., "data.user.active").
   bool? getBoolOrNull(dynamic key, {bool? defaultValue}) =>
-      boolNullableConvert(this?[key]) ?? defaultValue;
+      boolNullableConvert(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to bool, returns [defaultValue] on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.active").
   bool getBool(dynamic key, {bool defaultValue = false}) =>
       getBoolOrNull(key) ?? defaultValue;
 }

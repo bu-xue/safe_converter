@@ -35,10 +35,12 @@ extension SafeConvertOnObject2List on Object {
 /// Extension on Map? to provide safe conversion of values to List.
 extension SafeConvertOnMap2List on Map? {
   /// Gets value by key and converts to List<T>?.
+  /// Supports deep path access using dot notation (e.g., "data.items").
   List<T>? getListOrNull<T>(dynamic key, {List<T>? defaultValue}) =>
-      listNullableConvert<T>(this?[key]) ?? defaultValue;
+      listNullableConvert<T>(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to List<T>, returns [defaultValue] or empty list on failure.
+  /// Supports deep path access using dot notation (e.g., "data.items").
   List<T> getList<T>(dynamic key, {List<T>? defaultValue}) =>
       getListOrNull<T>(key) ?? defaultValue ?? <T>[];
 }

@@ -43,10 +43,12 @@ extension SafeConvertOnObject2Map on Object {
 /// Extension on Map? to provide safe conversion of values to Map.
 extension SafeConvertOnMap2Map on Map? {
   /// Gets value by key and converts to Map<NK, NV>?.
+  /// Supports deep path access using dot notation (e.g., "data.user.profile").
   Map<NK, NV>? getMapOrNull<NK, NV>(dynamic key, {Map<NK, NV>? defaultValue}) =>
-      mapNullableConvert<NK, NV>(this?[key]) ?? defaultValue;
+      mapNullableConvert<NK, NV>(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to Map<NK, NV>, returns [defaultValue] or empty map on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.profile").
   Map<NK, NV> getMap<NK, NV>(dynamic key, {Map<NK, NV>? defaultValue}) =>
       getMapOrNull<NK, NV>(key) ?? defaultValue ?? <NK, NV>{};
 }

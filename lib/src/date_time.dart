@@ -34,10 +34,12 @@ extension SafeConvertOnObject2DateTime on Object {
 /// Extension on Map? to provide safe conversion of values to DateTime.
 extension SafeConvertOnMap2DateTime on Map? {
   /// Gets value by key and converts to DateTime?.
+  /// Supports deep path access using dot notation (e.g., "data.user.createdAt").
   DateTime? getDateTimeOrNull(dynamic key, {DateTime? defaultValue}) =>
-      dateTimeNullableConvert(this?[key]) ?? defaultValue;
+      dateTimeNullableConvert(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to DateTime, returns [defaultValue] or epoch on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.createdAt").
   DateTime getDateTime(dynamic key, {DateTime? defaultValue}) =>
       getDateTimeOrNull(key) ??
       defaultValue ??

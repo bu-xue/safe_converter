@@ -40,6 +40,47 @@ extension SafeConvertOnObject on Object {
       asT<T>(this, defaultValue: defaultValue);
 }
 
+/// Extension on Map? to provide generic safe conversion of values.
+extension SafeConvertOnMap2T on Map? {
+  /// Internal helper to get value from a source (Map or List) by path.
+  dynamic _get(dynamic key) {
+    final source = this;
+    if (source == null) return null;
+    if (key.isEmpty) return null;
+    if (key is! String || !key.contains('.')) return source[key];
+    final keys = key.split('.');
+    dynamic current = source;
+    for (final k in keys) {
+      if (current == null) return null;
+      final map = mapNullableConvert<String, dynamic>(current);
+      if (map != null) {
+        current = map[k];
+      } else {
+        final list = listNullableConvert(current);
+        final index = int.tryParse(k);
+        if (list != null &&
+            index != null &&
+            index >= 0 &&
+            index < list.length) {
+          current = list[index];
+        } else {
+          return null;
+        }
+      }
+    }
+    return current;
+  }
+
+  /// Gets value by key and converts to type T?.
+  /// Supports deep path access using dot notation (e.g., "data.user.profile").
+  T? getTOrNull<T>(dynamic key) => asTOrNull<T>(_get(key));
+
+  /// Gets value by key and converts to type T, returns [defaultValue] on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.profile").
+  T getT<T>(dynamic key, {required T defaultValue}) =>
+      getTOrNull<T>(key) ?? defaultValue;
+}
+
 /// Extension for nullable objects providing safe non-null operations.
 extension SafeConvertOnObjectNullable<T> on T? {
   /// Executes [block] if the object is not null, otherwise returns null.

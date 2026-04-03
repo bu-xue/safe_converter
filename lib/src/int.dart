@@ -29,10 +29,12 @@ extension SafeConvertOnObject2Int on Object {
 /// Extension on Map? to provide safe conversion of values to int.
 extension SafeConvertOnMap2Int on Map? {
   /// Gets value by key and converts to int?.
+  /// Supports deep path access using dot notation (e.g., "data.user.age").
   int? getIntOrNull(dynamic key, {int? defaultValue}) =>
-      intNullableConvert(this?[key]) ?? defaultValue;
+      intNullableConvert(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to int, returns [defaultValue] on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.age").
   int getInt(dynamic key, {int defaultValue = 0}) =>
       getIntOrNull(key) ?? defaultValue;
 }

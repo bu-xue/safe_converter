@@ -27,10 +27,12 @@ extension SafeConvertOnObject2Double on Object {
 /// Extension on Map? to provide safe conversion of values to double.
 extension SafeConvertOnMap2Double on Map? {
   /// Gets value by key and converts to double?.
+  /// Supports deep path access using dot notation (e.g., "data.item.price").
   double? getDoubleOrNull(dynamic key, {double? defaultValue}) =>
-      doubleNullableConvert(this?[key]) ?? defaultValue;
+      doubleNullableConvert(_get(key)) ?? defaultValue;
 
   /// Gets value by key and converts to double, returns [defaultValue] on failure.
+  /// Supports deep path access using dot notation (e.g., "data.item.price").
   double getDouble(dynamic key, {double defaultValue = 0.0}) =>
       getDoubleOrNull(key) ?? defaultValue;
 }

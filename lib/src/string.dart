@@ -43,10 +43,12 @@ extension SafeConvertOnObject2String on Object {
 /// Extension on Map? to provide safe conversion of values to String.
 extension SafeConvertOnMap2String on Map? {
   /// Gets value by key and converts to String?.
+  /// Supports deep path access using dot notation (e.g., "data.user.name").
   String? getStringOrNull(dynamic key, {String? defaultValue}) =>
-      stringNullableConvert(this?[key]) ?? defaultValue;
+      stringNullableConvert(_get(key)) ?? defaultValue;
 
-  /// Gets value by key and converts to String, returns [defaultValue] on failure.
+  /// Gets value by key and converts to String, returns [defaultValue] or empty string on failure.
+  /// Supports deep path access using dot notation (e.g., "data.user.name").
   String getString(dynamic key, {String defaultValue = ""}) =>
       getStringOrNull(key) ?? defaultValue;
 }

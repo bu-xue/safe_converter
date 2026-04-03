@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 1.1.0 - Deep Path Access 🔥
+
+This update introduces powerful deep path access and automatic JSON decoding during traversal.
+
+### New Features
+- **Deep Path Access**: Support for dot notation (e.g., `data.user.name`) to access nested fields in `Map`.
+- **List Index Support**: Access list elements by index within paths (e.g., `items.0.id`).
+- **Automatic JSON Decoding**: The library now automatically detects and decodes JSON strings in the middle of a path, allowing seamless traversal through serialized data.
+- **Generic Path Access**: Added `getTOrNull<T>(key)` and `getT<T>(key)` to `Map` extensions for flexible, type-safe path access.
+
+### Improvements
+- Refactored core traversal logic into a private `_get` helper for better consistency and performance.
+- Enhanced internal robust type checking during path resolution.
+
+---
+
 ## 1.0.0 - Initial Release 🚀
 
 The first stable release of `safe_convert`, providing a robust and developer-friendly way to handle dynamic type conversion in Dart and Flutter.
