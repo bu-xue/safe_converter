@@ -1,0 +1,21 @@
+name: safe_converter
+description: A high-performance utility for safely converting dynamic values to specific types (int, double, bool, DateTime, etc.) without runtime exceptions.
+version: 1.0.0
+homepage: https://github.com/bu-xue/safe_converter
+repository: https://github.com/bu-xue/safe_converter
+
+topics:
+  - json
+  - conversion
+  - type-safety
+  - utilities
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # This package is pure Dart and has no dependencies.
+
+dev_dependencies:
+  test: ^1.24.0
+  lints: ^3.0.0
