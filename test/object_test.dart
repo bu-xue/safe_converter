@@ -87,16 +87,26 @@ main() {
   });
 
   group('New Aliases Tests', () {
-    test('asT and asTOrNull should work', () {
+    test('asT, asTOrNull and tryT should work', () {
       expect(asT<int>("100", defaultValue: 0), 100);
       expect(asTOrNull<double>("100.5"), 100.5);
+      expect(tryT<double>("100.5"), 100.5);
       expect(asT<bool>("yes", defaultValue: false), true);
     });
 
-    test('Object Extension: safe2T and safe2TOrNull should work', () {
+    test('Object Extension: safe2T, safe2TOrNull and try2T should work', () {
       const val = "123";
       expect(val.safe2TOrNull<int>(), 123);
+      expect(val.try2T<int>(), 123);
       expect("abc".safe2T<int>(defaultValue: 0), 0);
+      expect("abc".try2T<int>(), isNull);
+    });
+
+    test('Map Extension: getTOrNull and tryGetT should work', () {
+      final map = {'age': '25'};
+      expect(map.getTOrNull<int>('age'), 25);
+      expect(map.tryGetT<int>('age'), 25);
+      expect(map.tryGetT<int>('missing'), isNull);
     });
   });
 

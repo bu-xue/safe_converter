@@ -26,6 +26,9 @@ Map<K, V>? mapNullableConvert<K, V>(dynamic source) {
   return null;
 }
 
+/// Alias for [mapNullableConvert].
+Map<K, V>? tryMapConvert<K, V>(dynamic source) => mapNullableConvert<K, V>(source);
+
 /// Converts dynamic value to Map<K, V> with a default value.
 Map<K, V> mapConvert<K, V>(dynamic source, {Map<K, V>? defaultValue}) =>
     mapNullableConvert(source) ?? defaultValue ?? <K, V>{};
@@ -34,6 +37,9 @@ Map<K, V> mapConvert<K, V>(dynamic source, {Map<K, V>? defaultValue}) =>
 extension SafeConvertOnObject2Map on Object {
   /// Converts object to Map<K, V>?.
   Map<K, V>? safe2MapNullable<K, V>() => mapNullableConvert<K, V>(this);
+
+  /// Alias for [safe2MapNullable].
+  Map<K, V>? try2Map<K, V>() => safe2MapNullable<K, V>();
 
   /// Converts object to Map<K, V>, returns [defaultValue] or empty map on failure.
   Map<K, V> safe2Map<K, V>({Map<K, V>? defaultValue}) =>
@@ -47,6 +53,10 @@ extension SafeConvertOnMap2Map on Map? {
   Map<NK, NV>? getMapOrNull<NK, NV>(dynamic key, {Map<NK, NV>? defaultValue}) =>
       mapNullableConvert<NK, NV>(_get(key)) ?? defaultValue;
 
+  /// Alias for [getMapOrNull].
+  Map<NK, NV>? tryGetMap<NK, NV>(dynamic key, {Map<NK, NV>? defaultValue}) =>
+      getMapOrNull<NK, NV>(key, defaultValue: defaultValue);
+
   /// Gets value by key and converts to Map<NK, NV>, returns [defaultValue] or empty map on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.profile").
   Map<NK, NV> getMap<NK, NV>(dynamic key, {Map<NK, NV>? defaultValue}) =>
@@ -57,6 +67,10 @@ extension SafeConvertOnMap2Map on Map? {
 Map<K, V>? asMapOrNull<K, V>(Map? json, String key,
         {Map<K, V>? defaultValue}) =>
     json.getMapOrNull<K, V>(key, defaultValue: defaultValue);
+
+/// Alias for [asMapOrNull].
+Map<K, V>? tryMap<K, V>(Map? json, String key, {Map<K, V>? defaultValue}) =>
+    asMapOrNull<K, V>(json, key, defaultValue: defaultValue);
 
 /// Safely gets and converts Map value to Map.
 Map<K, V> asMap<K, V>(Map? json, String key, {Map<K, V>? defaultValue}) =>

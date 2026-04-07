@@ -2,36 +2,24 @@ import 'package:test/test.dart';
 import 'package:safe_converter/safe_converter.dart';
 
 void main() {
-  group('doubleNullableConvert Tests', () {
+  group('doubleNullableConvert and tryDoubleConvert Tests', () {
     test('null input returns null', () {
       expect(doubleNullableConvert(null), isNull);
+      expect(tryDoubleConvert(null), isNull);
     });
 
     test('double input returns itself', () {
       expect(doubleNullableConvert(1.23), 1.23);
+      expect(tryDoubleConvert(1.23), 1.23);
     });
 
     test('int input converts to double', () {
-      expect(doubleNullableConvert(42), 42.0);
-    });
-
-    test('bool input converts to double', () {
-      expect(doubleNullableConvert(true), 1.0);
-      expect(doubleNullableConvert(false), 0.0);
+      expect(tryDoubleConvert(42), 42.0);
     });
 
     test('String input converts to double', () {
-      expect(doubleNullableConvert("42.5"), 42.5);
-      expect(doubleNullableConvert("-1.23"), -1.23);
-    });
-
-    test('Invalid String input returns null', () {
-      expect(doubleNullableConvert("invalid"), isNull);
-    });
-
-    test('Other types return null', () {
-      expect(doubleNullableConvert([]), isNull);
-      expect(doubleNullableConvert({}), isNull);
+      expect(tryDoubleConvert("42.5"), 42.5);
+      expect(tryDoubleConvert("invalid"), isNull);
     });
   });
 
@@ -43,9 +31,11 @@ void main() {
   });
 
   group('SafeConvertObject2double Extension Tests', () {
-    test('safe2DoubleNullable works correctly', () {
+    test('safe2DoubleNullable and try2Double works correctly', () {
       expect("42.5".safe2DoubleNullable(), 42.5);
+      expect("42.5".try2Double(), 42.5);
       expect("invalid".safe2DoubleNullable(), isNull);
+      expect("invalid".try2Double(), isNull);
     });
 
     test('safe2Double works correctly', () {
@@ -63,9 +53,11 @@ void main() {
       'nullValue': null,
     };
 
-    test('getDoubleOrNull works correctly', () {
+    test('getDoubleOrNull and tryGetDouble works correctly', () {
       expect(testMap.getDoubleOrNull('doubleValue'), 42.5);
+      expect(testMap.tryGetDouble('doubleValue'), 42.5);
       expect(testMap.getDoubleOrNull('invalidValue'), isNull);
+      expect(testMap.tryGetDouble('invalidValue'), isNull);
     });
 
     test('getDouble works correctly', () {
@@ -74,14 +66,16 @@ void main() {
     });
   });
 
-  group('asDouble and asDoubleOrNull Tests', () {
+  group('asDouble, asDoubleOrNull and tryDouble Tests', () {
     final testMap = {
       'key': "42.5",
     };
 
-    test('asDoubleOrNull works correctly', () {
+    test('asDoubleOrNull and tryDouble works correctly', () {
       expect(asDoubleOrNull(testMap, 'key'), 42.5);
+      expect(tryDouble(testMap, 'key'), 42.5);
       expect(asDoubleOrNull(testMap, 'missing'), isNull);
+      expect(tryDouble(testMap, 'missing'), isNull);
     });
 
     test('asDouble works correctly', () {

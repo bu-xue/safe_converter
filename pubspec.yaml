@@ -1,6 +1,6 @@
 name: safe_converter
 description: A high-performance utility for safely converting dynamic values to specific types (int, double, bool, DateTime, etc.) without runtime exceptions.
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/bu-xue/safe_converter
 repository: https://github.com/bu-xue/safe_converter
 

@@ -24,6 +24,10 @@ String? stringNullableConvert(dynamic source, {bool useToString = false}) {
   return useToString ? source.toString() : null;
 }
 
+/// Alias for [stringNullableConvert].
+String? tryStringConvert(dynamic source, {bool useToString = false}) =>
+    stringNullableConvert(source, useToString: useToString);
+
 /// Converts dynamic value to String with a default value.
 String stringConvert(dynamic source,
         {String defaultValue = '', bool useToString = true}) =>
@@ -34,6 +38,10 @@ extension SafeConvertOnObject2String on Object {
   /// Converts object to String?.
   String? safe2StringNullable({bool useToString = false}) =>
       stringNullableConvert(this, useToString: useToString);
+
+  /// Alias for [safe2StringNullable].
+  String? try2String({bool useToString = false}) =>
+      safe2StringNullable(useToString: useToString);
 
   /// Converts object to String, returns [defaultValue] on failure.
   String safe2String({String defaultValue = '', bool useToString = true}) =>
@@ -47,6 +55,10 @@ extension SafeConvertOnMap2String on Map? {
   String? getStringOrNull(dynamic key, {String? defaultValue}) =>
       stringNullableConvert(_get(key)) ?? defaultValue;
 
+  /// Alias for [getStringOrNull].
+  String? tryGetString(dynamic key, {String? defaultValue}) =>
+      getStringOrNull(key, defaultValue: defaultValue);
+
   /// Gets value by key and converts to String, returns [defaultValue] or empty string on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.name").
   String getString(dynamic key, {String defaultValue = ""}) =>
@@ -56,6 +68,10 @@ extension SafeConvertOnMap2String on Map? {
 /// Safely gets and converts Map value to String?.
 String? asStringOrNull(Map? json, String key, {String? defaultValue}) =>
     json.getStringOrNull(key, defaultValue: defaultValue);
+
+/// Alias for [asStringOrNull].
+String? tryString(Map? json, String key, {String? defaultValue}) =>
+    asStringOrNull(json, key, defaultValue: defaultValue);
 
 /// Safely gets and converts Map value to String.
 String asString(Map? json, String key, {String defaultValue = ""}) =>

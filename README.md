@@ -7,12 +7,13 @@
 
 Stop worrying about `type 'Null' is not a subtype of type 'int'` or `FormatException`. Handle JSON parsing, API responses, and dynamic data with absolute confidence.
 
----
+--- 
 
 ## ✨ Key Features
 
 - **🛡️ Bulletproof Conversion**: Never crash on `null`, `NaN`, `Infinity`, or malformed strings.
 - **🔍 Deep Path Access**: Access nested data using dot notation (e.g., `json.getString("data.user.name")`).
+- **🍭 Fluent Try Aliases**: Concise `tryxx` methods (e.g., `tryInt`, `tryGetBool`) for even cleaner code.
 - **🧠 Smart Parsing**: 
   - Numeric strings (`"123"`) ➡️ `int`.
   - Flexible booleans (`"yes"`, `"on"`, `"1"`) ➡️ `true`.
@@ -26,7 +27,16 @@ Stop worrying about `type 'Null' is not a subtype of type 'int'` or `FormatExcep
 
 ## 🚀 Quick Start
 
-### 1. Deep Path Access (New! 🔥)
+### 1. The "Try" Way (New! 🍭)
+Short and sweet. Perfect for nullable assignments.
+
+```dart
+final name = json.tryGetString("user.profile.name"); // same as getStringOrNull
+final age = json.tryGetInt("user.profile.age");     // same as getIntOrNull
+final list = json.tryGetList<int>("data.scores");   // same as getListOrNull
+```
+
+### 2. Deep Path Access
 Tired of writing `json['data']['user']['name']`? Now you can use dot notation. It even works if middle layers are JSON strings!
 
 ```dart
@@ -45,7 +55,7 @@ final theme = json.getString("data.user.settings.theme"); // "dark" (Auto-decode
 final firstId = json.getInt("data.items.0.id");         // 1
 ```
 
-### 2. The Basics
+### 3. The Basics
 Use extensions on any `Object?`.
 
 ```dart
@@ -53,8 +63,8 @@ import 'package:safe_converter/safe_converter.dart';
 
 final dynamic rawData = "123.45";
 
-int id = rawData.safe2Int(); // 123
-double price = rawData.safe2Double(); // 123.45
+int id = rawData.try2Int() ?? 0; // 123
+double price = rawData.try2Double() ?? 0.0; // 123.45
 ```
 
 ---
@@ -73,7 +83,7 @@ SafeConverter.registerCodec<User>(ObjCodec(
 ));
 
 // Use it with deep paths!
-User? user = json.getTOrNull<User>("data.user"); 
+User? user = json.tryGetT<User>("data.user"); 
 ```
 
 ---
@@ -104,7 +114,7 @@ SafeConvertConfig.logHandler = (message) {
 
 ```yaml
 dependencies:
-  safe_converter: ^1.1.0
+  safe_converter: ^1.2.0
 ```
 
 ## 📜 License

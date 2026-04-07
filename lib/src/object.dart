@@ -11,19 +11,25 @@ T? _tNullableConvert<T>(dynamic source) {
   return _TypeConverters.convert<T>(source);
 }
 
-/// Alias for [tNullableConvert].
+/// Alias for [_tNullableConvert].
 T? asTOrNull<T>(dynamic source) => _tNullableConvert<T>(source);
 
-/// Alias for [tConvert].
-T asT<T>(dynamic source, {required T defaultValue}) =>
-    _tNullableConvert<T>(source) ?? defaultValue;
+/// Alias for [_tNullableConvert].
+T? tryT<T>(dynamic source) => asTOrNull<T>(source);
 
 /// Top-level function to convert dynamic value to nullable type T.
 T? tNullableConvert<T>(dynamic source) => _tNullableConvert<T>(source);
 
+/// Alias for [tNullableConvert].
+T? tryTConvert<T>(dynamic source) => tNullableConvert<T>(source);
+
 /// Top-level function to convert dynamic value to non-nullable type T with a default value.
 T tConvert<T>(dynamic source, {required T defaultValue}) =>
     _tNullableConvert<T>(source) ?? defaultValue;
+
+/// Alias for [tConvert].
+T asT<T>(dynamic source, {required T defaultValue}) =>
+    tConvert<T>(source, defaultValue: defaultValue);
 
 /// Registers a custom codec for type T.
 void registerCodec<T>(ObjCodec<T> objCodec) {
@@ -34,6 +40,9 @@ void registerCodec<T>(ObjCodec<T> objCodec) {
 extension SafeConvertOnObject on Object {
   /// Converts object to type T?.
   T? safe2TOrNull<T>() => asTOrNull<T>(this);
+
+  /// Alias for [safe2TOrNull].
+  T? try2T<T>() => safe2TOrNull<T>();
 
   /// Converts object to type T, returns [defaultValue] on failure.
   T safe2T<T>({required T defaultValue}) =>
@@ -74,6 +83,9 @@ extension SafeConvertOnMap2T on Map? {
   /// Gets value by key and converts to type T?.
   /// Supports deep path access using dot notation (e.g., "data.user.profile").
   T? getTOrNull<T>(dynamic key) => asTOrNull<T>(_get(key));
+
+  /// Alias for [getTOrNull].
+  T? tryGetT<T>(dynamic key) => getTOrNull<T>(key);
 
   /// Gets value by key and converts to type T, returns [defaultValue] on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.profile").

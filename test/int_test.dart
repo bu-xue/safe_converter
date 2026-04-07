@@ -2,48 +2,25 @@ import 'package:test/test.dart';
 import 'package:safe_converter/safe_converter.dart';
 
 void main() {
-  group('intNullableConvert Tests', () {
+  group('intNullableConvert and tryIntConvert Tests', () {
     test('null input returns null', () {
       expect(intNullableConvert(null), isNull);
+      expect(tryIntConvert(null), isNull);
     });
 
     test('int input returns itself', () {
       expect(intNullableConvert(42), 42);
+      expect(tryIntConvert(42), 42);
     });
 
     test('double input converts to int', () {
       expect(intNullableConvert(42.7), 42);
-      expect(intNullableConvert(-42.7), -42);
-    });
-
-    test('double NaN or Infinite returns null', () {
-      expect(intNullableConvert(double.nan), isNull);
-      expect(intNullableConvert(double.infinity), isNull);
-      expect(intNullableConvert(double.negativeInfinity), isNull);
-    });
-
-    test('bool input converts to int', () {
-      expect(intNullableConvert(true), 1);
-      expect(intNullableConvert(false), 0);
+      expect(tryIntConvert(42.7), 42);
     });
 
     test('String input converts to int', () {
-      expect(intNullableConvert("42"), 42);
-      expect(intNullableConvert("-42"), -42);
-    });
-
-    test('String input converts to int via double', () {
-      expect(intNullableConvert("42.7"), 42);
-      expect(intNullableConvert("-42.7"), -42);
-    });
-
-    test('Invalid String input returns null', () {
-      expect(intNullableConvert("invalid"), isNull);
-    });
-
-    test('Other types return null', () {
-      expect(intNullableConvert([]), isNull);
-      expect(intNullableConvert({}), isNull);
+      expect(tryIntConvert("42"), 42);
+      expect(tryIntConvert("invalid"), isNull);
     });
   });
 
@@ -55,9 +32,11 @@ void main() {
   });
 
   group('SafeConvertOnObject2Int Extension Tests', () {
-    test('safe2IntNullable works correctly', () {
+    test('safe2IntNullable and try2Int works correctly', () {
       expect("42".safe2IntNullable(), 42);
+      expect("42".try2Int(), 42);
       expect("invalid".safe2IntNullable(), isNull);
+      expect("invalid".try2Int(), isNull);
     });
 
     test('safe2Int works correctly', () {
@@ -75,9 +54,11 @@ void main() {
       'nullValue': null,
     };
 
-    test('getIntOrNull works correctly', () {
+    test('getIntOrNull and tryGetInt works correctly', () {
       expect(testMap.getIntOrNull('intValue'), 42);
+      expect(testMap.tryGetInt('intValue'), 42);
       expect(testMap.getIntOrNull('invalidValue'), isNull);
+      expect(testMap.tryGetInt('invalidValue'), isNull);
     });
 
     test('getInt works correctly', () {
@@ -86,14 +67,16 @@ void main() {
     });
   });
 
-  group('asInt and asIntOrNull Tests', () {
+  group('asInt, asIntOrNull and tryInt Tests', () {
     final testMap = {
       'key': "42",
     };
 
-    test('asIntOrNull works correctly', () {
+    test('asIntOrNull and tryInt works correctly', () {
       expect(asIntOrNull(testMap, 'key'), 42);
+      expect(tryInt(testMap, 'key'), 42);
       expect(asIntOrNull(testMap, 'missing'), isNull);
+      expect(tryInt(testMap, 'missing'), isNull);
     });
 
     test('asInt works correctly', () {

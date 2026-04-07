@@ -40,11 +40,14 @@ void main() {
   });
 
   group('SafeConvertObject2Map Extension Tests', () {
-    test('safe2MapNullable works correctly', () {
+    test('safe2MapNullable and try2Map works correctly', () {
       expect(
           {'a': 1, 'b': 2}.safe2MapNullable<String, int>(), {'a': 1, 'b': 2});
+      expect({'a': 1, 'b': 2}.try2Map<String, int>(), {'a': 1, 'b': 2});
       expect('{"a":1}'.safe2MapNullable<String, int>(), {'a': 1});
+      expect('{"a":1}'.try2Map<String, int>(), {'a': 1});
       expect('invalid'.safe2MapNullable<String, int>(), isNull);
+      expect('invalid'.try2Map<String, int>(), isNull);
     });
 
     test('safe2Map works correctly', () {
@@ -61,12 +64,17 @@ void main() {
       'invalid': 'invalid',
     };
 
-    test('getMapOrNull works correctly', () {
+    test('getMapOrNull and tryGetMap works correctly', () {
       expect(
         testMap.getMapOrNull<String, int>('nested'),
         {'a': 1, 'b': 2},
       );
+      expect(
+        testMap.tryGetMap<String, int>('nested'),
+        {'a': 1, 'b': 2},
+      );
       expect(testMap.getMapOrNull<String, int>('invalid'), isNull);
+      expect(testMap.tryGetMap<String, int>('invalid'), isNull);
     });
 
     test('getMap works correctly', () {
@@ -78,14 +86,16 @@ void main() {
     });
   });
 
-  group('asMap and asMapOrNull Tests', () {
+  group('asMap, asMapOrNull and tryMap Tests', () {
     final testMap = {
       'key': {'a': 1, 'b': 2}
     };
 
-    test('asMapOrNull works correctly', () {
+    test('asMapOrNull and tryMap works correctly', () {
       expect(asMapOrNull<String, int>(testMap, 'key'), {'a': 1, 'b': 2});
+      expect(tryMap<String, int>(testMap, 'key'), {'a': 1, 'b': 2});
       expect(asMapOrNull<String, int>(testMap, 'missingKey'), isNull);
+      expect(tryMap<String, int>(testMap, 'missingKey'), isNull);
     });
 
     test('asMap works correctly', () {

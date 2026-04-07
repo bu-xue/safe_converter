@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 1.2.0 - Fluent Try Aliases 🍭
+
+This update introduces concise `tryxx` aliases for all `OrNull` methods to improve developer experience and code readability.
+
+### New Features
+- **Try Aliases**: Added shorter `tryxx` aliases for all conversion methods.
+    - **Map Extension**: `tryGetInt`, `tryGetBool`, `tryGetString`, `tryGetList`, `tryGetMap`, `tryGetT`, etc.
+    - **Object Extension**: `try2Int`, `try2Bool`, `try2String`, `try2T`, etc.
+    - **Top-level Functions**: `tryInt`, `tryBool`, `tryString`, `tryList`, `tryMap`, `tryT`, etc.
+- **Improved Fluent API**: Enhanced `Object` extensions with `try` prefixes for more natural chain calls.
+
+---
+
 ## 1.1.0 - Deep Path Access 🔥
 
 This update introduces powerful deep path access and automatic JSON decoding during traversal.

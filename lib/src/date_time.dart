@@ -13,6 +13,9 @@ DateTime? dateTimeNullableConvert(dynamic source) {
   return null;
 }
 
+/// Alias for [dateTimeNullableConvert].
+DateTime? tryDateTimeConvert(dynamic source) => dateTimeNullableConvert(source);
+
 /// Converts dynamic value to DateTime with a default value.
 DateTime dateTimeConvert(dynamic source, {DateTime? defaultValue}) =>
     dateTimeNullableConvert(source) ??
@@ -23,6 +26,9 @@ DateTime dateTimeConvert(dynamic source, {DateTime? defaultValue}) =>
 extension SafeConvertOnObject2DateTime on Object {
   /// Converts object to DateTime?.
   DateTime? safe2DateTimeNullable() => dateTimeNullableConvert(this);
+
+  /// Alias for [safe2DateTimeNullable].
+  DateTime? try2DateTime() => safe2DateTimeNullable();
 
   /// Converts object to DateTime, returns [defaultValue] or epoch on failure.
   DateTime safe2DateTime({DateTime? defaultValue}) =>
@@ -38,6 +44,10 @@ extension SafeConvertOnMap2DateTime on Map? {
   DateTime? getDateTimeOrNull(dynamic key, {DateTime? defaultValue}) =>
       dateTimeNullableConvert(_get(key)) ?? defaultValue;
 
+  /// Alias for [getDateTimeOrNull].
+  DateTime? tryGetDateTime(dynamic key, {DateTime? defaultValue}) =>
+      getDateTimeOrNull(key, defaultValue: defaultValue);
+
   /// Gets value by key and converts to DateTime, returns [defaultValue] or epoch on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.createdAt").
   DateTime getDateTime(dynamic key, {DateTime? defaultValue}) =>
@@ -49,6 +59,10 @@ extension SafeConvertOnMap2DateTime on Map? {
 /// Safely gets and converts Map value to DateTime?.
 DateTime? asDateTimeOrNull(Map? json, String key, {DateTime? defaultValue}) =>
     json.getDateTimeOrNull(key, defaultValue: defaultValue);
+
+/// Alias for [asDateTimeOrNull].
+DateTime? tryDateTime(Map? json, String key, {DateTime? defaultValue}) =>
+    asDateTimeOrNull(json, key, defaultValue: defaultValue);
 
 /// Safely gets and converts Map value to DateTime.
 DateTime asDateTime(Map? json, String key, {DateTime? defaultValue}) =>

@@ -18,6 +18,9 @@ List<V>? listNullableConvert<V>(dynamic source) {
   return null;
 }
 
+/// Alias for [listNullableConvert].
+List<V>? tryListConvert<V>(dynamic source) => listNullableConvert<V>(source);
+
 /// Converts dynamic value to List<V> with a default value.
 List<V> listConvert<V>(dynamic source, {List<V>? defaultValue}) =>
     listNullableConvert(source) ?? defaultValue ?? <V>[];
@@ -26,6 +29,9 @@ List<V> listConvert<V>(dynamic source, {List<V>? defaultValue}) =>
 extension SafeConvertOnObject2List on Object {
   /// Converts object to List<V>?.
   List<V>? safe2ListNullable<V>() => listNullableConvert<V>(this);
+
+  /// Alias for [safe2ListNullable].
+  List<V>? try2List<V>() => safe2ListNullable<V>();
 
   /// Converts object to List<V>, returns [defaultValue] or empty list on failure.
   List<V> safe2List<V>({List<V>? defaultValue}) =>
@@ -39,6 +45,10 @@ extension SafeConvertOnMap2List on Map? {
   List<T>? getListOrNull<T>(dynamic key, {List<T>? defaultValue}) =>
       listNullableConvert<T>(_get(key)) ?? defaultValue;
 
+  /// Alias for [getListOrNull].
+  List<T>? tryGetList<T>(dynamic key, {List<T>? defaultValue}) =>
+      getListOrNull<T>(key, defaultValue: defaultValue);
+
   /// Gets value by key and converts to List<T>, returns [defaultValue] or empty list on failure.
   /// Supports deep path access using dot notation (e.g., "data.items").
   List<T> getList<T>(dynamic key, {List<T>? defaultValue}) =>
@@ -48,6 +58,10 @@ extension SafeConvertOnMap2List on Map? {
 /// Safely gets and converts Map value to List?.
 List<T>? asListOrNull<T>(Map? json, String key, {List<T>? defaultValue}) =>
     json.getListOrNull<T>(key, defaultValue: defaultValue);
+
+/// Alias for [asListOrNull].
+List<T>? tryList<T>(Map? json, String key, {List<T>? defaultValue}) =>
+    asListOrNull<T>(json, key, defaultValue: defaultValue);
 
 /// Safely gets and converts Map value to List.
 List<T> asList<T>(Map? json, String key, {List<T>? defaultValue}) =>

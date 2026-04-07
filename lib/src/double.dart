@@ -10,6 +10,9 @@ double? doubleNullableConvert(dynamic source) {
   return null;
 }
 
+/// Alias for [doubleNullableConvert].
+double? tryDoubleConvert(dynamic source) => doubleNullableConvert(source);
+
 /// Converts dynamic value to double with a default value.
 double doubleConvert(dynamic source, {double defaultValue = 0.0}) =>
     doubleNullableConvert(source) ?? defaultValue;
@@ -18,6 +21,9 @@ double doubleConvert(dynamic source, {double defaultValue = 0.0}) =>
 extension SafeConvertOnObject2Double on Object {
   /// Converts object to double?.
   double? safe2DoubleNullable() => doubleNullableConvert(this);
+
+  /// Alias for [safe2DoubleNullable].
+  double? try2Double() => safe2DoubleNullable();
 
   /// Converts object to double, returns [defaultValue] on failure.
   double safe2Double({double defaultValue = 0.0}) =>
@@ -30,6 +36,10 @@ extension SafeConvertOnMap2Double on Map? {
   /// Supports deep path access using dot notation (e.g., "data.item.price").
   double? getDoubleOrNull(dynamic key, {double? defaultValue}) =>
       doubleNullableConvert(_get(key)) ?? defaultValue;
+
+  /// Alias for [getDoubleOrNull].
+  double? tryGetDouble(dynamic key, {double? defaultValue}) =>
+      getDoubleOrNull(key, defaultValue: defaultValue);
 
   /// Gets value by key and converts to double, returns [defaultValue] on failure.
   /// Supports deep path access using dot notation (e.g., "data.item.price").
@@ -44,3 +54,7 @@ double asDouble(Map? json, String key, {double defaultValue = 0.0}) =>
 /// Safely gets and converts Map value to double?.
 double? asDoubleOrNull(Map? json, String key, {double? defaultValue}) =>
     json.getDoubleOrNull(key, defaultValue: defaultValue);
+
+/// Alias for [asDoubleOrNull].
+double? tryDouble(Map? json, String key, {double? defaultValue}) =>
+    asDoubleOrNull(json, key, defaultValue: defaultValue);

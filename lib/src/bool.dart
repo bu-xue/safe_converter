@@ -19,6 +19,9 @@ bool? boolNullableConvert(dynamic source) {
   return null;
 }
 
+/// Alias for [boolNullableConvert].
+bool? tryBoolConvert(dynamic source) => boolNullableConvert(source);
+
 /// Converts dynamic value to bool with a default value.
 bool boolConvert(dynamic source, {bool defaultValue = false}) =>
     boolNullableConvert(source) ?? defaultValue;
@@ -27,6 +30,9 @@ bool boolConvert(dynamic source, {bool defaultValue = false}) =>
 extension SafeConvertOnObject2Bool on Object {
   /// Converts object to bool?.
   bool? safe2BoolNullable() => boolNullableConvert(this);
+
+  /// Alias for [safe2BoolNullable].
+  bool? try2Bool() => safe2BoolNullable();
 
   /// Converts object to bool, returns [defaultValue] on failure.
   bool safe2Bool({bool defaultValue = false}) =>
@@ -39,6 +45,10 @@ extension SafeConvertOnMap2Bool on Map? {
   /// Supports deep path access using dot notation (e.g., "data.user.active").
   bool? getBoolOrNull(dynamic key, {bool? defaultValue}) =>
       boolNullableConvert(_get(key)) ?? defaultValue;
+
+  /// Alias for [getBoolOrNull].
+  bool? tryGetBool(dynamic key, {bool? defaultValue}) =>
+      getBoolOrNull(key, defaultValue: defaultValue);
 
   /// Gets value by key and converts to bool, returns [defaultValue] on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.active").
@@ -53,3 +63,7 @@ bool asBool(Map? json, String key, {bool defaultValue = false}) =>
 /// Safely gets and converts Map value to bool?.
 bool? asBoolOrNull(Map? json, String key, {bool? defaultValue}) =>
     json.getBoolOrNull(key, defaultValue: defaultValue);
+
+/// Alias for [asBoolOrNull].
+bool? tryBool(Map? json, String key, {bool? defaultValue}) =>
+    asBoolOrNull(json, key, defaultValue: defaultValue);

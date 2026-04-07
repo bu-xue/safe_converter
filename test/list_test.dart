@@ -30,10 +30,13 @@ void main() {
   });
 
   group('SafeConvertObject2List Extension Tests', () {
-    test('safe2ListNullable works correctly', () {
+    test('safe2ListNullable and try2List works correctly', () {
       expect([1, 2, 3].safe2ListNullable<int>(), [1, 2, 3]);
+      expect([1, 2, 3].try2List<int>(), [1, 2, 3]);
       expect('[1,2]'.safe2ListNullable<int>(), [1, 2]);
+      expect('[1,2]'.try2List<int>(), [1, 2]);
       expect('invalid'.safe2ListNullable<int>(), isNull);
+      expect('invalid'.try2List<int>(), isNull);
     });
 
     test('safe2List works correctly', () {
@@ -50,10 +53,13 @@ void main() {
       'invalidList': 'invalid',
     };
 
-    test('getListOrNull works correctly', () {
+    test('getListOrNull and tryGetList works correctly', () {
       expect(testMap.getListOrNull<int>('intList'), [1, 2, 3]);
+      expect(testMap.tryGetList<int>('intList'), [1, 2, 3]);
       expect(testMap.getListOrNull<String>('stringList'), ['a', 'b']);
+      expect(testMap.tryGetList<String>('stringList'), ['a', 'b']);
       expect(testMap.getListOrNull<int>('invalidList'), isNull);
+      expect(testMap.tryGetList<int>('invalidList'), isNull);
     });
 
     test('getList works correctly', () {
@@ -64,14 +70,16 @@ void main() {
     });
   });
 
-  group('asList and asListOrNull Tests', () {
+  group('asList, asListOrNull and tryList Tests', () {
     final testMap = {
       'key': [1, 2, 3]
     };
 
-    test('asListOrNull works correctly', () {
+    test('asListOrNull and tryList works correctly', () {
       expect(asListOrNull<int>(testMap, 'key'), [1, 2, 3]);
+      expect(tryList<int>(testMap, 'key'), [1, 2, 3]);
       expect(asListOrNull<int>(testMap, 'missingKey'), isNull);
+      expect(tryList<int>(testMap, 'missingKey'), isNull);
     });
 
     test('asList works correctly', () {

@@ -54,10 +54,12 @@ void main() {
   });
 
   group('SafeConvertOnObject2String Extension Tests', () {
-    test('safe2StringNullable works correctly', () {
+    test('safe2StringNullable and try2String works correctly', () {
       expect("test".safe2StringNullable(), "test");
+      expect("test".try2String(), "test");
       expect(
           DateTime(2024, 1, 1).safe2StringNullable(useToString: false), isNull);
+      expect(DateTime(2024, 1, 1).try2String(useToString: false), isNull);
     });
 
     test('safe2String works correctly', () {
@@ -76,9 +78,11 @@ void main() {
       'nullValue': null,
     };
 
-    test('getStringOrNull works correctly', () {
+    test('getStringOrNull and tryGetString works correctly', () {
       expect(testMap.getStringOrNull('stringValue'), "test");
+      expect(testMap.tryGetString('stringValue'), "test");
       expect(testMap.getStringOrNull('nullValue'), isNull);
+      expect(testMap.tryGetString('nullValue'), isNull);
     });
 
     test('getString works correctly', () {
@@ -88,14 +92,16 @@ void main() {
     });
   });
 
-  group('asString and asStringOrNull Tests', () {
+  group('asString, asStringOrNull and tryString Tests', () {
     final testMap = {
       'key': "test",
     };
 
-    test('asStringOrNull works correctly', () {
+    test('asStringOrNull and tryString works correctly', () {
       expect(asStringOrNull(testMap, 'key'), "test");
+      expect(tryString(testMap, 'key'), "test");
       expect(asStringOrNull(testMap, 'missingKey'), isNull);
+      expect(tryString(testMap, 'missingKey'), isNull);
     });
 
     test('asString works correctly', () {

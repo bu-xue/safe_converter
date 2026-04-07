@@ -4,14 +4,18 @@ part of '../safe_converter.dart';
 int? intNullableConvert(dynamic source) {
   if (source == null) return null;
   if (source is int) return source;
-  if (source is double)
+  if (source is double) {
     return source.isNaN || source.isInfinite ? null : source.toInt();
+  }
   if (source is bool) return source ? 1 : 0;
   if (source is String) {
     return int.tryParse(source) ?? double.tryParse(source)?.toInt();
   }
   return null;
 }
+
+/// Alias for [intNullableConvert].
+int? tryIntConvert(dynamic source) => intNullableConvert(source);
 
 /// Converts dynamic value to int with a default value.
 int intConvert(dynamic source, {int defaultValue = 0}) =>
@@ -21,6 +25,9 @@ int intConvert(dynamic source, {int defaultValue = 0}) =>
 extension SafeConvertOnObject2Int on Object {
   /// Converts object to int?.
   int? safe2IntNullable() => intNullableConvert(this);
+
+  /// Alias for [safe2IntNullable].
+  int? try2Int() => safe2IntNullable();
 
   /// Converts object to int, returns [defaultValue] on failure.
   int safe2Int({int defaultValue = 0}) => safe2IntNullable() ?? defaultValue;
@@ -32,6 +39,10 @@ extension SafeConvertOnMap2Int on Map? {
   /// Supports deep path access using dot notation (e.g., "data.user.age").
   int? getIntOrNull(dynamic key, {int? defaultValue}) =>
       intNullableConvert(_get(key)) ?? defaultValue;
+
+  /// Alias for [getIntOrNull].
+  int? tryGetInt(dynamic key, {int? defaultValue}) =>
+      getIntOrNull(key, defaultValue: defaultValue);
 
   /// Gets value by key and converts to int, returns [defaultValue] on failure.
   /// Supports deep path access using dot notation (e.g., "data.user.age").
@@ -46,3 +57,7 @@ int asInt(Map? json, String key, {int defaultValue = 0}) =>
 /// Safely gets and converts Map value to int?.
 int? asIntOrNull(Map? json, String key, {int? defaultValue}) =>
     json.getIntOrNull(key, defaultValue: defaultValue);
+
+/// Alias for [asIntOrNull].
+int? tryInt(Map? json, String key, {int? defaultValue}) =>
+    asIntOrNull(json, key, defaultValue: defaultValue);
